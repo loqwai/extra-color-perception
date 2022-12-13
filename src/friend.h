@@ -1,6 +1,7 @@
 #ifndef FRIEND_H
 #define FRIEND_H
 #include <string>
+#include <vector>
 struct Color
 {
   uint8_t r;
@@ -52,6 +53,13 @@ Color nameToColor(std::string name)
   return {0, 0, 0};
 }
 typedef void onFriendFound(Friend f);
-typedef void FrendResultFn(onFriendFound callback);
-class FriendManager {};
+typedef void FriendResultFn(onFriendFound callback);
+class FriendManager {
+  public:
+    FriendManager() {
+    }
+    std::vector<Friend>* getFriends(int delta=0) {
+      return new std::vector<Friend>();
+    }
+};
 #endif // FRIEND_H
