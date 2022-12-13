@@ -49,7 +49,11 @@ void scanForBleDevices(onFriendFound callback)
   pBLEScan->start(
       1, [](BLEScanResults results)
       {
-        // Serial.println("Scan done");
+        for(int i = 0; i < results.getCount(); i++)
+        {
+          auto result = results.getDevice(i);
+          Serial.println(result.toString().c_str());
+        }
       },
-      false);
+      true);
 }
