@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <unity.h>
-#include "utils.h"
+#include "friend.h"
 #include <string>
 String STR_TO_TEST;
 
@@ -15,10 +15,7 @@ void tearDown(void) {
 }
 
 void test_string_concat(void) {
-    std::string hello = "Hello, ";
-    std::string world = "world!";
-    std::string result = append(hello, world);
-    TEST_ASSERT_EQUAL_STRING("Hello, world!", result.c_str());
+
 }
 
 void test_string_substring(void) {

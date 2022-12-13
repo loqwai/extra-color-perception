@@ -7,8 +7,6 @@
 #define COLOR_SENSE_UUID "ceb9bda0-7adc-11ed-93f2-bf342b277c5d"
 #define COLOR_CHARACTERISTIC_UUID "99aba128-7ae6-11ed-bf02-0b5fba621e12"
 
-typedef void onFriendFound(Friend f);
-
 class BLEColorScanner : public BLEAdvertisedDeviceCallbacks
 {
   onFriendFound *callback;
@@ -55,5 +53,5 @@ void scanForBleDevices(onFriendFound callback)
           Serial.println(result.toString().c_str());
         }
       },
-      true);
+      false);
 }

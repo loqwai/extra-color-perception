@@ -51,5 +51,6 @@ Color nameToColor(std::string name)
   }
   return {0, 0, 0};
 }
-
+typedef void onFriendFound(Friend f);
+typedef void FrendResultFn(onFriendFound callback);
 #endif // FRIEND_H
