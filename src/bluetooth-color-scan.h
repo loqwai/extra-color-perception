@@ -40,12 +40,12 @@ public:
 
 void scanForBleDevices(onFriendFound callback)
 {
-  // Serial.println("Scanning...");
   auto pBLEScan = BLEDevice::getScan();
   pBLEScan->setActiveScan(true);
   pBLEScan->setInterval(100);
   pBLEScan->setWindow(99);
   pBLEScan->setAdvertisedDeviceCallbacks(new BLEColorScanner(callback));
+
   pBLEScan->start(
       1, [](BLEScanResults results)
       {
