@@ -12,14 +12,18 @@ void tearDown(void) {
     manager = NULL;
 }
 
-void test_string_concat(void) {
+void test_friend_manager_exists(void) {
     TEST_ASSERT_NOT_NULL(manager);
 }
-
+void test_friend_manager_returns_friends(void) {
+    auto friends = manager->getFriends();
+    TEST_ASSERT_NOT_NULL(friends);
+}
 void setup()
 {
     UNITY_BEGIN();
-    RUN_TEST(test_string_concat);
+    RUN_TEST(test_friend_manager_exists);
+    RUN_TEST(test_friend_manager_returns_friends);
     UNITY_END(); // stop unit testing
 }
 
