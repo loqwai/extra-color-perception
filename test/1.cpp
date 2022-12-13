@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <unity.h>
-
+#include "library.cpp"
+#include <string>
 String STR_TO_TEST;
 
 void setUp(void) {
@@ -14,9 +15,10 @@ void tearDown(void) {
 }
 
 void test_string_concat(void) {
-    String hello = "Hello, ";
-    String world = "world!";
-    TEST_ASSERT_EQUAL_STRING(STR_TO_TEST.c_str(), (hello + world).c_str());
+    std::string hello = "Hello, ";
+    std::string world = "world!";
+    std::string result = append(hello, world);
+    TEST_ASSERT_EQUAL_STRING("Hello, world!", result.c_str());
 }
 
 void test_string_substring(void) {
