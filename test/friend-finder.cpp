@@ -2,9 +2,9 @@
 #include <string>
 #include <map>
 #include "friend.h"
-FriendManager* manager;
+FriendFinder* manager;
 void setUp(void) {
-    manager = new FriendManager();
+    manager = new FriendFinder();
 }
 
 void tearDown(void) {
@@ -18,6 +18,17 @@ void test_exists(void) {
 void test_returns_friends(void) {
     auto friends = manager->getFriends();
     TEST_ASSERT_NOT_NULL(friends);
+}
+void test_on_friend_found_adds_friend(void) {
+    auto friends = manager->getFriends();
+    TEST_ASSERT_EQUAL(0, friends->size());
+    Friend andrew = {
+        .distance = 1,
+        .color = nameToColor("red"),
+    };
+    manager->foundFriend(andrew);
+    friends = manager->getFriends();
+    TEST_ASSERT_EQUAL(1, friends->size());
 }
 void setup()
 {

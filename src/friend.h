@@ -54,12 +54,15 @@ Color nameToColor(std::string name)
 }
 typedef void onFriendFound(Friend f);
 typedef void FriendResultFn(onFriendFound callback);
-class FriendManager {
+class FriendFinder {
   public:
-    FriendManager() {
+    FriendFinder() {
     }
     std::vector<Friend>* getFriends(int delta=0) {
       return new std::vector<Friend>();
+    }
+    void foundFriend(Friend f) {
+      // do nothing
     }
 };
 #endif // FRIEND_H
