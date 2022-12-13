@@ -1,32 +1,27 @@
 #include <unity.h>
 #include "friend.h"
 #include <string>
-std::string STR_TO_TEST;
-
+// include standard C++ map
+#include <map>
+std::map<std::string, Friend>* deviceMap;
 void setUp(void) {
     // set stuff up here
-    STR_TO_TEST = "Hello, world!";
+    deviceMap = new std::map<std::string, Friend>();
 }
 
 void tearDown(void) {
     // clean stuff up here
-    STR_TO_TEST = "";
+    deviceMap->clear();
 }
 
 void test_string_concat(void) {
-
-}
-
-void test_string_substring(void) {
-    TEST_ASSERT_EQUAL_STRING("Hello", STR_TO_TEST.c_str());
+    TEST_ASSERT_EQUAL_INT(0, deviceMap->size());
 }
 
 void setup()
 {
     UNITY_BEGIN();
     RUN_TEST(test_string_concat);
-    RUN_TEST(test_string_substring);
-
     UNITY_END(); // stop unit testing
 }
 
