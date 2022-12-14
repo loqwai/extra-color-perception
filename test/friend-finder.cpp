@@ -35,30 +35,39 @@ void test_on_friend_found_adds_colors(void)
     colors = manager->updateColors();
     TEST_ASSERT_EQUAL(1, colors->size());
 
-    auto strength = colors->at(0).strength;
+    auto strength = colors->at(0)->strength;
     TEST_ASSERT_GREATER_THAN(0, strength);
 
     manager->foundFriend(andrew, 0);
     colors = manager->updateColors();
-    auto strength2 = colors->at(0).strength;
+    auto strength2 = colors->at(0)->strength;
     TEST_ASSERT_GREATER_THAN(strength,strength2);
 
     manager->foundFriend(andrew, 0);
     colors = manager->updateColors();
-    auto strength3 = colors->at(0).strength;
+    auto strength3 = colors->at(0)->strength;
     TEST_ASSERT_GREATER_THAN(strength,strength2);
 
 }
 void test_on_friend_not_found_later_reduces_strength(void)
 {
-    Friend andrew = {
-        .name = "Andrew",
+auto colors = manager->updateColors();
+    TEST_ASSERT_EQUAL(0, colors->size());
+    Friend sarah = {
+        .name = "Sarah",
         .distance = 20,
     };
-    manager->foundFriend(andrew, 0);
-    auto colors = manager->updateColors();
-    auto color = colors->at(0);
-    TEST_ASSERT_LESS_THAN(67, color.strength);
+    manager->foundFriend(sarah, 0);
+    colors = manager->updateColors();
+    TEST_ASSERT_EQUAL(1, colors->size());
+
+    auto strength = colors->at(0)->strength;
+    TEST_ASSERT_GREATER_THAN(0, strength);
+
+    colors = manager->updateColors();
+    auto strength2 = colors->at(0)->strength;
+    TEST_ASSERT_GREATER_THAN(strength2,strength);
+
 }
 void setup()
 {

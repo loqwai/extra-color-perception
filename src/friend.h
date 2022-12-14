@@ -71,6 +71,7 @@ class FriendFinder
 private:
   std::map<std::string, FriendLastSeen> friends;
   std::map<std::string, ColorStrength *> prevColorStrengths;
+  std::vector<ColorStrength *> colors;
 
 public:
   static const uint8_t MAX_DISTANCE = 60;
@@ -78,9 +79,8 @@ public:
   {
     return 100 - (distance * 100 / MAX_DISTANCE);
   }
-  std::vector<ColorStrength> *updateColors()
+  std::vector<ColorStrength*>* updateColors()
   {
-    auto colorStrengthList = new std::vector<ColorStrength>();
     for (auto const &x : friends)
     {
       auto friendLastSeen = x.second;
@@ -93,16 +93,18 @@ public:
         prevStrength = prevLastSeen->strength;
       }
       strength = lerp(prevStrength, strength, 0.1);
-      colorStrengthList->push_back(ColorStrength{
-          .color = f.color,
-          .strength = strength});
-
       prevColorStrengths[f.name] = new ColorStrength{
           .color = f.color,
           .strength = strength};
     }
     friends.clear();
-    return colorStrengthList;
+    colors.clear();
+    for (auto const &x : prevColorStrengths)
+    {
+      auto colorStrength = x.second;
+      colors.push_back(colorStrength);
+    }
+    return &colors;
   }
   void foundFriend(Friend f, uint32_t now)
   {

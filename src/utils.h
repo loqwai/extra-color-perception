@@ -31,4 +31,15 @@ uint8_t mapRange(int8_t x, int8_t in_min, int8_t in_max, int8_t out_min, int8_t 
 {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
+template <typename T>
+std::vector<T> values(std::map<std::string, T> map)
+{
+  std::vector<T> values;
+  for (auto const &pair : map)
+  {
+    auto value = pair.second;
+    values.push_back(value);
+  }
+  return values;
+}
 #endif // COLOR_SENSE_UTILS_H
