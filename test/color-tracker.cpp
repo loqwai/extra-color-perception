@@ -102,7 +102,7 @@ void test_middle_sense_eventually_reaches_close_to_128(void)
     for (int i = 0; i < 100; i++)
     {
         colortracker::detect({.id = 1,
-                              .rssi = -65,
+                              .rssi = -70,
                               .is_empty = false});
 
         colortracker::update();
@@ -116,7 +116,7 @@ void test_low_sense_still_above_0(void)
     for (int i = 0; i < 100; i++)
     {
         colortracker::detect({.id = 1,
-                              .rssi = -75,
+                              .rssi = -85,
                               .is_empty = false});
 
         colortracker::update();

@@ -40,14 +40,13 @@ namespace utils
       return 0;
     }
     double distancePercentage = distance * 1.0 / MAX_DISTANCE;
-    double strength = 255 - (distancePercentage * 255);
+    double strength = 255 - 4*(distancePercentage * 255);
     return clamp(strength, 5, 255);
   }
 
   uint8_t rssi_to_strength(int rssi)
   {
-    double FUDGE_FACTOR = 1.35;
-    return distance_to_strength(rssi_to_distance(rssi*FUDGE_FACTOR));
+    return distance_to_strength(rssi_to_distance(rssi));
   }
 }
 #endif // COLOR_SENSE_UTILS_H
