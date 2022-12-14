@@ -16,26 +16,26 @@ void test_exists(void) {
     TEST_ASSERT_NOT_NULL(manager);
 }
 void test_returns_friends(void) {
-    auto friends = manager->getFriends();
+    auto friends = manager->getColors();
     TEST_ASSERT_NOT_NULL(friends);
 }
-void test_on_friend_found_adds_friend(void) {
-    auto friends = manager->getFriends();
-    TEST_ASSERT_EQUAL(0, friends->size());
+void test_on_friend_found_adds_colors(void) {
+    auto colors = manager->getColors();
+    TEST_ASSERT_EQUAL(0, colors->size());
     Friend andrew = {
         .name = "Andrew",
         .distance = 1,
     };
     manager->foundFriend(andrew);
-    friends = manager->getFriends();
-    TEST_ASSERT_EQUAL(1, friends->size());
+    colors = manager->getColors();
+    TEST_ASSERT_EQUAL(1, colors->size());
 }
 void setup()
 {
     UNITY_BEGIN();
     RUN_TEST(test_exists);
     RUN_TEST(test_returns_friends);
-    RUN_TEST(test_on_friend_found_adds_friend);
+    RUN_TEST(test_on_friend_found_adds_colors);
     UNITY_END(); // stop unit testing
 }
 

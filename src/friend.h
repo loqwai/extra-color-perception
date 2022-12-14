@@ -53,6 +53,13 @@ Color nameToColor(std::string name)
   }
   return {0, 0, 0};
 }
+
+struct ColorStrength
+{
+  Color color;
+  uint8_t strength;
+};
+
 typedef void onFriendFound(Friend f);
 typedef void FriendResultFn(onFriendFound callback);
 class FriendFinder {
@@ -61,13 +68,13 @@ class FriendFinder {
   public:
     FriendFinder() {
     }
-    std::vector<Friend>* getFriends(int delta=0) {
-      auto friendList = new std::vector<Friend>();
+    std::vector<ColorStrength>* getColors(int delta=0) {
+      auto colorStrengthList = new std::vector<ColorStrength>();
       for (auto const& x : friends)
       {
-        friendList->push_back(x.second);
+        colorStrengthList->push_back({});
       }
-      return friendList;
+      return colorStrengthList;
     }
     void foundFriend(Friend f) {
       friends[f.name] = f;
