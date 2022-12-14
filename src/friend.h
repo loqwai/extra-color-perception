@@ -11,6 +11,7 @@ struct Color
 
 struct Friend
 {
+  std::string name;
   uint8_t distance;
   Color color;
 };
@@ -55,14 +56,21 @@ Color nameToColor(std::string name)
 typedef void onFriendFound(Friend f);
 typedef void FriendResultFn(onFriendFound callback);
 class FriendFinder {
+  private:
+    std::map<std::string, Friend> friends;
   public:
     FriendFinder() {
     }
     std::vector<Friend>* getFriends(int delta=0) {
-      return new std::vector<Friend>();
+      auto friendList = new std::vector<Friend>();
+      for (auto const& x : friends)
+      {
+        friendList->push_back(x.second);
+      }
+      return friendList;
     }
     void foundFriend(Friend f) {
-      // do nothing
+      friends[f.name] = f;
     }
 };
 #endif // FRIEND_H

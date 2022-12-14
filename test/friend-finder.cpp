@@ -23,8 +23,8 @@ void test_on_friend_found_adds_friend(void) {
     auto friends = manager->getFriends();
     TEST_ASSERT_EQUAL(0, friends->size());
     Friend andrew = {
+        .name = "Andrew",
         .distance = 1,
-        .color = nameToColor("red"),
     };
     manager->foundFriend(andrew);
     friends = manager->getFriends();
@@ -35,6 +35,7 @@ void setup()
     UNITY_BEGIN();
     RUN_TEST(test_exists);
     RUN_TEST(test_returns_friends);
+    RUN_TEST(test_on_friend_found_adds_friend);
     UNITY_END(); // stop unit testing
 }
 
