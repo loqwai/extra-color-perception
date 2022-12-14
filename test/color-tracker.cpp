@@ -1,9 +1,7 @@
-#include <Arduino.h>
 #include <unity.h>
-#include "library.cpp"
-#include <string>
-String STR_TO_TEST;
+#include "color-distance-tracker.hpp"
 
+ColorTracker* tracker;
 void setUp(void) {
     // set stuff up here
     STR_TO_TEST = "Hello, world!";
