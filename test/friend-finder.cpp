@@ -32,21 +32,23 @@ void test_on_friend_found_adds_colors(void) {
     auto color = colors->at(0);
     TEST_ASSERT_EQUAL(67, color.strength);
 }
-// void test_on_friend_not_found_much_later_disappears(void) {
-//     Friend andrew = {
-//         .name = "Andrew",
-//         .distance = 20,
-//     };
-//     manager->foundFriend(andrew, 0);
-//     auto colors = manager->getColors(1000);
-//     TEST_ASSERT_EQUAL(1, colors->size());
-// }
+void test_on_friend_not_found_later_reduces_strength(void) {
+    Friend andrew = {
+        .name = "Andrew",
+        .distance = 20,
+    };
+    manager->foundFriend(andrew, 0);
+    auto colors = manager->getColors(1000);
+    auto color = colors->at(0);
+    TEST_ASSERT_LESS_THAN(67, color.strength);
+}
 void setup()
 {
     UNITY_BEGIN();
     RUN_TEST(test_exists);
     RUN_TEST(test_returns_friends);
     RUN_TEST(test_on_friend_found_adds_colors);
+    RUN_TEST(test_on_friend_not_found_later_reduces_strength);
     UNITY_END(); // stop unit testing
 }
 
