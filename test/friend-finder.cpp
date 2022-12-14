@@ -30,7 +30,7 @@ void test_on_friend_found_adds_colors(void) {
     colors = manager->getColors(0);
     TEST_ASSERT_EQUAL(1, colors->size());
     auto color = colors->at(0);
-    TEST_ASSERT_EQUAL(80, color.strength);
+    TEST_ASSERT_EQUAL(67, color.strength);
 }
 // void test_on_friend_not_found_much_later_disappears(void) {
 //     Friend andrew = {

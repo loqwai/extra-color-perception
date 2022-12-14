@@ -2,6 +2,7 @@
 #define FRIEND_H
 #include <string>
 #include <vector>
+#include "./utils.h"
 struct Color
 {
   uint8_t r;
@@ -72,15 +73,17 @@ class FriendFinder {
     std::map<std::string,ColorStrength> prevColorStrengths;
   public:
     static const uint8_t MAX_DISTANCE = 60;
+    static uint8_t distanceToStrength(uint8_t distance) {
+      return 100 - (distance * 100 / MAX_DISTANCE);
+    }
     std::vector<ColorStrength>* getColors(uint32_t now) {
       auto colorStrengthList = new std::vector<ColorStrength>();
       for (auto const& x : friends)
       {
         auto friendLastSeen = x.second;
-        auto previousColorStrength  = prevColorStrengths[x.first];
         colorStrengthList->push_back(ColorStrength{
           .color = friendLastSeen.theFriend.color,
-          .strength = (uint8_t)(MAX_DISTANCE - friendLastSeen.theFriend.distance)
+          .strength = distanceToStrength(friendLastSeen.theFriend.distance)
         });
       }
       return colorStrengthList;
