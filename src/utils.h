@@ -1,7 +1,7 @@
 #ifndef COLOR_SENSE_UTILS_H
 #define COLOR_SENSE_UTILS_H
 #include <math.h>
-#define MAX_DISTANCE 80
+#define MAX_DISTANCE 60
 namespace utils
 {
   double smooth(double val, double prev_val, double smooth_factor)
@@ -30,16 +30,24 @@ namespace utils
     }
   }
 
+  double clamp(double val, double min, double max)
+  {
+    return fmax(min, fmin(max, val));
+  }
   uint8_t distance_to_strength(double distance)
   {
-    double distancePercentage = distance * 1.0 /MAX_DISTANCE;
-    return 255 - (distancePercentage * 255);
-
+    if(distance >= MAX_DISTANCE) {
+      return 0;
+    }
+    double distancePercentage = distance * 1.0 / MAX_DISTANCE;
+    double strength = 255 - (distancePercentage * 255);
+    return clamp(strength, 5, 255);
   }
 
   uint8_t rssi_to_strength(int rssi)
   {
-    return distance_to_strength(rssi_to_distance(rssi));
+    double FUDGE_FACTOR = 1.35;
+    return distance_to_strength(rssi_to_distance(rssi*FUDGE_FACTOR));
   }
 }
 #endif // COLOR_SENSE_UTILS_H

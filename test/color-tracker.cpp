@@ -61,24 +61,69 @@ void test_sense_fades_over_time(void)
                           .is_empty = false});
     colortracker::update();
     auto before_strength = colortracker::senses[1].strength;
-        for(int i = 0; i < 4; i++){
+    for (int i = 0; i < 4; i++)
+    {
         colortracker::update();
     }
     auto after_strength = colortracker::senses[1].strength;
     TEST_ASSERT_LESS_THAN(before_strength, after_strength);
 }
-void test_sense_eventually_reaches_0(void){
+void test_sense_eventually_reaches_0(void)
+{
     colortracker::detect({.id = 1,
                           .rssi = -65,
                           .is_empty = false});
 
-    for(int i = 0; i < 100; i++){
+    for (int i = 0; i < 100; i++)
+    {
         colortracker::update();
     }
     auto strength = colortracker::senses[1].strength;
     auto device = colortracker::devices[1];
     TEST_ASSERT_TRUE(device.is_empty);
     // TEST_ASSERT_EQUAL(0, strength);
+}
+void test_sense_close_eventually_reaches_close_to_255(void)
+{
+    for (int i = 0; i < 100; i++)
+    {
+        colortracker::detect({.id = 1,
+                              .rssi = -45,
+                              .is_empty = false});
+
+        colortracker::update();
+    }
+    auto strength = colortracker::senses[1].strength;
+    TEST_ASSERT_FALSE(colortracker::devices[1].is_empty);
+    TEST_ASSERT_GREATER_THAN(225, strength);
+}
+void test_middle_sense_eventually_reaches_close_to_128(void)
+{
+    for (int i = 0; i < 100; i++)
+    {
+        colortracker::detect({.id = 1,
+                              .rssi = -65,
+                              .is_empty = false});
+
+        colortracker::update();
+    }
+    auto strength = colortracker::senses[1].strength;
+    TEST_ASSERT_GREATER_THAN(120, strength);
+    TEST_ASSERT_LESS_THAN(200, strength);
+}
+void test_low_sense_still_above_0(void)
+{
+    for (int i = 0; i < 100; i++)
+    {
+        colortracker::detect({.id = 1,
+                              .rssi = -75,
+                              .is_empty = false});
+
+        colortracker::update();
+    }
+    auto strength = colortracker::senses[1].strength;
+    TEST_ASSERT_GREATER_THAN(0, strength);
+    TEST_ASSERT_LESS_THAN(50, strength);
 }
 void setup()
 {
@@ -90,6 +135,9 @@ void setup()
     RUN_TEST(test_smaller_rssi_is_larger_distance);
     RUN_TEST(test_sense_fades_over_time);
     RUN_TEST(test_sense_eventually_reaches_0);
+    RUN_TEST(test_sense_close_eventually_reaches_close_to_255);
+    RUN_TEST(test_middle_sense_eventually_reaches_close_to_128);
+    RUN_TEST(test_low_sense_still_above_0);
     // RUN_TEST(test_distance_to_strength);
     UNITY_END(); // stop unit testing
 }

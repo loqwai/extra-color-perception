@@ -62,7 +62,7 @@ namespace colortracker
   {
     if (devices[device.id].is_empty)
     {
-      devices[device.id].rssi = -100;
+      devices[device.id].rssi = -95;
       devices[device.id].is_empty = false;
     }
     new_devices[device.id].rssi = device.rssi;
@@ -76,6 +76,7 @@ namespace colortracker
       if (devices[i].is_empty)
       {
         senses[i].is_empty = true;
+        senses[i].strength = 0;
         continue;
       }
       senses[i].is_empty = false;
@@ -91,7 +92,7 @@ namespace colortracker
       if(devices[i].rssi < -100){
         devices[i].is_empty = true;
         senses[i].is_empty = true;
-
+        senses[i].strength = 0;
         continue;
       }
       senses[i].strength = utils::rssi_to_strength(devices[i].rssi);
