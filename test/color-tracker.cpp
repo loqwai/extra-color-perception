@@ -36,7 +36,7 @@ void test_tracker_does_not_see_device(void)
     TEST_ASSERT_TRUE(sense.is_empty);
 }
 
-void test_rssi_to_strength(void)
+void test_detect_rssi_to_strength(void)
 {
     colortracker::detect({.id = 1,
                           .rssi = -55,
@@ -47,6 +47,12 @@ void test_rssi_to_strength(void)
     colortracker::update();
     TEST_ASSERT_GREATER_THAN(colortracker::senses[1].strength, colortracker::senses[2].strength);
 }
+
+// void test_distance_to_strength(void)
+// {
+//     auto strength = utils::rssi_to_strength(-55);
+//     TEST_ASSERT_GREATER_THAN(999,strength);
+// }
 
 void test_smaller_rssi_is_larger_distance(void)
 {
@@ -61,8 +67,9 @@ void setup()
     RUN_TEST(test_tracker_exists);
     RUN_TEST(test_tracker_sees_device);
     RUN_TEST(test_tracker_does_not_see_device);
-    RUN_TEST(test_rssi_to_strength);
+    RUN_TEST(test_detect_rssi_to_strength);
     RUN_TEST(test_smaller_rssi_is_larger_distance);
+    // RUN_TEST(test_distance_to_strength);
     UNITY_END(); // stop unit testing
 }
 

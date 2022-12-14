@@ -1,12 +1,12 @@
 #ifndef COLOR_SENSE_UTILS_H
 #define COLOR_SENSE_UTILS_H
 #include <math.h>
-#define MAX_DISTANCE 100
+#define MAX_DISTANCE 60
 namespace utils
 {
-  uint8_t lerp(uint8_t a, uint8_t b, float f)
+  uint8_t smooth(uint8_t val, uint8_t prev_val, float smooth_factor)
   {
-    return a + f * (b - a);
+    return val + smooth_factor * (prev_val - val);
   }
 
   double rssi_to_distance(int rssi)

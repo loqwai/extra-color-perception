@@ -77,6 +77,10 @@ namespace colortracker
         continue;
       }
       sense.is_empty = false;
+      if(!new_devices[i].is_empty){
+        device.rssi = utils::smooth(device.rssi, new_devices[i].rssi, 0.1);
+        new_devices[i].is_empty = true;
+      }
       sense.strength = utils::rssi_to_strength(device.rssi);
       senses[i] = sense;
     }
