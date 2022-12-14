@@ -45,7 +45,7 @@ void test_detect_rssi_to_strength(void)
                           .rssi = -80,
                           .is_empty = false});
     colortracker::update();
-    TEST_ASSERT_LESS_THAN(colortracker::senses[1].strength, colortracker::senses[2].strength);
+    TEST_ASSERT_GREATER_THAN(colortracker::senses[2].strength, colortracker::senses[1].strength);
 }
 
 void test_smaller_rssi_is_larger_distance(void)
