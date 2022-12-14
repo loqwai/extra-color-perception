@@ -2,7 +2,7 @@
 #ifndef NUM_COLOR_TRACKERS
 #define NUM_COLOR_TRACKERS 3
 #endif
-#include "./util.h"
+#include "./utils.h"
 // BLE Device Name Data Structure:
 // [1] - ID (0-255)
 // [2] - R (0-255)
@@ -28,7 +28,7 @@ namespace colortracker
   };
 
   Device devices[NUM_COLOR_TRACKERS];
-  Device newDevices[NUM_COLOR_TRACKERS];
+  Device new_devices[NUM_COLOR_TRACKERS];
   Sense senses[NUM_COLOR_TRACKERS];
   uint32_t num_color_trackers = NUM_COLOR_TRACKERS;
 
@@ -52,7 +52,7 @@ namespace colortracker
     for (int i = 0; i < NUM_COLOR_TRACKERS; i++)
     {
       init(devices);
-      init(newDevices);
+      init(new_devices);
       init(senses);
     }
   }
@@ -62,8 +62,8 @@ namespace colortracker
       devices[device.id].rssi = -100;
       devices[device.id].is_empty = false;
     }
-    newDevices[device.id].rssi = device.rssi;
-    newDevices[device.id].is_empty = false;
+    new_devices[device.id].rssi = device.rssi;
+    new_devices[device.id].is_empty = false;
   };
 
   void update(){
@@ -77,7 +77,7 @@ namespace colortracker
         continue;
       }
       sense.is_empty = false;
-      sense.strength = 100;
+      sense.strength = utils::rssi_to_strength(device.rssi);
       senses[i] = sense;
     }
   }
