@@ -1,26 +1,22 @@
 #include <unity.h>
 #include "color-distance-tracker.hpp"
-
-ColorTracker* tracker;
 void setUp(void) {
-    // set stuff up here
-    tracker = new ColorTracker();
+    colortracker::init();
 }
 
 void tearDown(void) {
-    // clean stuff up here
-    delete tracker;
 }
 
-void test_string_concat(void) {
-    TEST_ASSERT_NOT_NULL(tracker);
+void test_tracker_exists(void) {
+   auto sense = colortracker::senses[1];
+   TEST_ASSERT_EQUAL(1, sense.id);
 }
 
 
 void setup()
 {
     UNITY_BEGIN();
-    RUN_TEST(test_string_concat);
+    RUN_TEST(test_tracker_exists);
     UNITY_END(); // stop unit testing
 }
 
