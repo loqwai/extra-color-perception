@@ -69,14 +69,19 @@ typedef void FriendResultFn(onFriendFound callback);
 class FriendFinder {
   private:
     std::map<std::string, FriendLastSeen> friends;
+    std::map<std::string,ColorStrength> prevColorStrengths;
   public:
-    FriendFinder() {
-    }
-    std::vector<ColorStrength>* getColors() {
+    static const uint8_t MAX_DISTANCE = 60;
+    std::vector<ColorStrength>* getColors(uint32_t now) {
       auto colorStrengthList = new std::vector<ColorStrength>();
       for (auto const& x : friends)
       {
-        colorStrengthList->push_back({});
+        auto friendLastSeen = x.second;
+        auto previousColorStrength  = prevColorStrengths[x.first];
+        colorStrengthList->push_back(ColorStrength{
+          .color = friendLastSeen.theFriend.color,
+          .strength = (uint8_t)(MAX_DISTANCE - friendLastSeen.theFriend.distance)
+        });
       }
       return colorStrengthList;
     }

@@ -16,20 +16,31 @@ void test_exists(void) {
     TEST_ASSERT_NOT_NULL(manager);
 }
 void test_returns_friends(void) {
-    auto friends = manager->getColors();
+    auto friends = manager->getColors(0);
     TEST_ASSERT_NOT_NULL(friends);
 }
 void test_on_friend_found_adds_colors(void) {
-    auto colors = manager->getColors();
+    auto colors = manager->getColors(0);
     TEST_ASSERT_EQUAL(0, colors->size());
     Friend andrew = {
         .name = "Andrew",
-        .distance = 1,
+        .distance = 20,
     };
     manager->foundFriend(andrew, 0);
-    colors = manager->getColors();
+    colors = manager->getColors(0);
     TEST_ASSERT_EQUAL(1, colors->size());
+    auto color = colors->at(0);
+    TEST_ASSERT_EQUAL(80, color.strength);
 }
+// void test_on_friend_not_found_much_later_disappears(void) {
+//     Friend andrew = {
+//         .name = "Andrew",
+//         .distance = 20,
+//     };
+//     manager->foundFriend(andrew, 0);
+//     auto colors = manager->getColors(1000);
+//     TEST_ASSERT_EQUAL(1, colors->size());
+// }
 void setup()
 {
     UNITY_BEGIN();
