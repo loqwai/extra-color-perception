@@ -72,10 +72,10 @@ namespace colortracker
       auto device = devices[i];
       auto sense = senses[i];
 
-      // if(device.is_empty){
-      //   sense.is_empty = true;
-      //   continue;
-      // }
+      if(device.is_empty){
+        sense.is_empty = true;
+        continue;
+      }
       sense.is_empty = false;
       sense.strength = 100;
       senses[i] = sense;

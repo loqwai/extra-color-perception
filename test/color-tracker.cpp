@@ -23,12 +23,23 @@ void test_tracker_sees_device(void) {
    TEST_ASSERT_FALSE(sense.is_empty);
 }
 
+void test_tracker_does_not_see_device(void) {
+   colortracker::detect({
+        .id = 1,
+        .rssi = -55,
+        .is_empty = false
+   });
+   colortracker::update();
+   auto sense = colortracker::senses[0];
+   TEST_ASSERT_TRUE(sense.is_empty);
+}
 
 void setup()
 {
     UNITY_BEGIN();
     RUN_TEST(test_tracker_exists);
     RUN_TEST(test_tracker_sees_device);
+    RUN_TEST(test_tracker_does_not_see_device);
     UNITY_END(); // stop unit testing
 }
 
