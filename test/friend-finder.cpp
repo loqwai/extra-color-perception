@@ -46,7 +46,7 @@ void test_on_friend_found_adds_colors(void)
     manager->foundFriend(andrew, 0);
     colors = manager->updateColors();
     auto strength3 = colors->at(0).strength;
-    TEST_ASSERT_GREATER_THAN(strength2,strength3);
+    TEST_ASSERT_GREATER_THAN(strength,strength2);
 
 }
 void test_on_friend_not_found_later_reduces_strength(void)

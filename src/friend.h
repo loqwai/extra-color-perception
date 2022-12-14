@@ -17,7 +17,6 @@ struct Friend
   Color color;
 };
 
-
 Color nameToColor(std::string name)
 {
   if (name == "red")
@@ -67,43 +66,49 @@ struct FriendLastSeen
 };
 typedef void onFriendFound(Friend f);
 typedef void FriendResultFn(onFriendFound callback);
-class FriendFinder {
-  private:
-    std::map<std::string, FriendLastSeen> friends;
-    std::map<std::string,ColorStrength*> prevColorStrengths;
-  public:
-    static const uint8_t MAX_DISTANCE = 60;
-    static uint8_t distanceToStrength(uint8_t distance) {
-      return 100 - (distance * 100 / MAX_DISTANCE);
-    }
-    std::vector<ColorStrength>* updateColors() {
-      auto colorStrengthList = new std::vector<ColorStrength>();
-      for (auto const& x : friends)
+class FriendFinder
+{
+private:
+  std::map<std::string, FriendLastSeen> friends;
+  std::map<std::string, ColorStrength *> prevColorStrengths;
+
+public:
+  static const uint8_t MAX_DISTANCE = 60;
+  static uint8_t distanceToStrength(uint8_t distance)
+  {
+    return 100 - (distance * 100 / MAX_DISTANCE);
+  }
+  std::vector<ColorStrength> *updateColors()
+  {
+    auto colorStrengthList = new std::vector<ColorStrength>();
+    for (auto const &x : friends)
+    {
+      auto friendLastSeen = x.second;
+      auto f = friendLastSeen.theFriend;
+      auto strength = distanceToStrength(f.distance);
+      auto prevStrength = 0;
+      auto prevLastSeen = prevColorStrengths[f.name];
+      if (prevLastSeen != NULL)
       {
-        auto friendLastSeen = x.second;
-        auto strength = distanceToStrength(friendLastSeen.theFriend.distance);
-        auto prevStrength = 0;
-        auto prevLastSeen = prevColorStrengths[friendLastSeen.theFriend.name];
-        if(prevLastSeen != NULL){
-          prevStrength = prevLastSeen->strength;
-        }
-        strength = lerp(prevStrength, strength, 0.1);
-        colorStrengthList->push_back(ColorStrength{
-          .color = friendLastSeen.theFriend.color,
-          .strength = strength
-        });
-        prevColorStrengths[friendLastSeen.theFriend.name] = new ColorStrength{
-          .color = friendLastSeen.theFriend.color,
-          .strength = strength
-        };
+        prevStrength = prevLastSeen->strength;
       }
-      return colorStrengthList;
+      strength = lerp(prevStrength, strength, 0.1);
+      colorStrengthList->push_back(ColorStrength{
+          .color = f.color,
+          .strength = strength});
+
+      prevColorStrengths[f.name] = new ColorStrength{
+          .color = f.color,
+          .strength = strength};
     }
-    void foundFriend(Friend f, uint32_t now) {
-      friends[f.name] = FriendLastSeen {
+    friends.clear();
+    return colorStrengthList;
+  }
+  void foundFriend(Friend f, uint32_t now)
+  {
+    friends[f.name] = FriendLastSeen{
         .theFriend = f,
-        .lastSeen = now
-      };
-    }
+        .lastSeen = now};
+  }
 };
 #endif // FRIEND_H
