@@ -1,6 +1,12 @@
 #ifndef COLOR_SENSE_UTILS_H
 #define COLOR_SENSE_UTILS_H
 #include <math.h>
+
+uint8_t lerp(uint8_t a, uint8_t b, float f)
+{
+  return a + f * (b - a);
+}
+
 double rssiToDistance(int rssi)
 {
   int txPower = -59; // hard coded power value. Usually ranges between -59 to -65

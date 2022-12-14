@@ -70,21 +70,32 @@ typedef void FriendResultFn(onFriendFound callback);
 class FriendFinder {
   private:
     std::map<std::string, FriendLastSeen> friends;
-    std::map<std::string,ColorStrength> prevColorStrengths;
+    std::map<std::string,ColorStrength*> prevColorStrengths;
   public:
     static const uint8_t MAX_DISTANCE = 60;
     static uint8_t distanceToStrength(uint8_t distance) {
       return 100 - (distance * 100 / MAX_DISTANCE);
     }
-    std::vector<ColorStrength>* getColors(uint32_t now) {
+    std::vector<ColorStrength>* updateColors() {
       auto colorStrengthList = new std::vector<ColorStrength>();
       for (auto const& x : friends)
       {
         auto friendLastSeen = x.second;
+        auto strength = distanceToStrength(friendLastSeen.theFriend.distance);
+        auto prevStrength = 0;
+        auto prevLastSeen = prevColorStrengths[friendLastSeen.theFriend.name];
+        if(prevLastSeen != NULL){
+          prevStrength = prevLastSeen->strength;
+        }
+        strength = lerp(prevStrength, strength, 0.1);
         colorStrengthList->push_back(ColorStrength{
           .color = friendLastSeen.theFriend.color,
-          .strength = distanceToStrength(friendLastSeen.theFriend.distance)
+          .strength = strength
         });
+        prevColorStrengths[friendLastSeen.theFriend.name] = new ColorStrength{
+          .color = friendLastSeen.theFriend.color,
+          .strength = strength
+        };
       }
       return colorStrengthList;
     }
