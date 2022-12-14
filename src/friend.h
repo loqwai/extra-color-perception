@@ -74,10 +74,13 @@ private:
   std::vector<ColorStrength *> colors;
 
 public:
-  static const uint8_t MAX_DISTANCE = 60;
+  static const uint8_t MAX_DISTANCE = 60.0;
   static uint8_t distanceToStrength(uint8_t distance)
   {
-    return 100 - (distance * 100 / MAX_DISTANCE);
+    if(distance > MAX_DISTANCE) {
+      return 0;
+    }
+    return 100 * (distance * 1.0 / MAX_DISTANCE);
   }
   std::vector<ColorStrength*>* updateColors()
   {
@@ -86,7 +89,7 @@ public:
       auto friendLastSeen = x.second;
       auto f = friendLastSeen.theFriend;
       auto strength = distanceToStrength(f.distance);
-      auto prevStrength = 0;
+      uint8_t prevStrength = 0;
       auto prevLastSeen = prevColorStrengths[f.name];
       if (prevLastSeen != NULL)
       {
