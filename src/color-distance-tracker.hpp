@@ -2,7 +2,7 @@
 #ifndef NUM_COLOR_TRACKERS
 #define NUM_COLOR_TRACKERS 3
 #endif
-
+#include "./util.h"
 // BLE Device Name Data Structure:
 // [1] - ID (0-255)
 // [2] - R (0-255)

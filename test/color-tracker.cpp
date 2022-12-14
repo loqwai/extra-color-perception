@@ -34,12 +34,28 @@ void test_tracker_does_not_see_device(void) {
    TEST_ASSERT_TRUE(sense.is_empty);
 }
 
+void test_rssi_to_strength(void) {
+   colortracker::detect({
+        .id = 1,
+        .rssi = -55,
+        .is_empty = false
+   });
+    colortracker::detect({
+        .id = 2,
+        .rssi = -80,
+        .is_empty = false
+    });
+   colortracker::update();
+   TEST_ASSERT_GREATER_THAN(colortracker::senses[1].strength, colortracker::senses[2].strength);
+}
+
 void setup()
 {
     UNITY_BEGIN();
     RUN_TEST(test_tracker_exists);
     RUN_TEST(test_tracker_sees_device);
     RUN_TEST(test_tracker_does_not_see_device);
+    RUN_TEST(test_rssi_to_strength);
     UNITY_END(); // stop unit testing
 }
 
