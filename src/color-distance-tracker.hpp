@@ -32,14 +32,16 @@ namespace colortracker
   Sense senses[NUM_COLOR_TRACKERS];
   uint32_t num_color_trackers = NUM_COLOR_TRACKERS;
 
-  void init(Device* d){
+  void init(Device *d)
+  {
     for (int i = 0; i < NUM_COLOR_TRACKERS; i++)
     {
       d[i].id = i;
       d[i].is_empty = true;
     }
   }
-  void init(Sense* s){
+  void init(Sense *s)
+  {
     for (int i = 0; i < NUM_COLOR_TRACKERS; i++)
     {
       s[i].id = i;
@@ -56,7 +58,8 @@ namespace colortracker
       init(senses);
     }
   }
-  void detect(Device device){
+  void detect(Device device)
+  {
     if (devices[device.id].is_empty)
     {
       devices[device.id].rssi = -100;
@@ -66,23 +69,32 @@ namespace colortracker
     new_devices[device.id].is_empty = false;
   };
 
-  void update(){
+  void update()
+  {
     for (int i = 0; i < NUM_COLOR_TRACKERS; i++)
     {
-      auto device = devices[i];
-      auto sense = senses[i];
-
-      if(device.is_empty){
-        sense.is_empty = true;
+      if (devices[i].is_empty)
+      {
+        senses[i].is_empty = true;
         continue;
       }
-      sense.is_empty = false;
-      if(!new_devices[i].is_empty){
-        device.rssi = utils::smooth(device.rssi, new_devices[i].rssi, 0.1);
+      senses[i].is_empty = false;
+      if (new_devices[i].is_empty)
+      {
+        devices[i].rssi = utils::smooth(devices[i].rssi, -110, 0.1);
+      }
+      else
+      {
+        devices[i].rssi = utils::smooth(devices[i].rssi, new_devices[i].rssi, 0.1);
         new_devices[i].is_empty = true;
       }
-      sense.strength = utils::rssi_to_strength(device.rssi);
-      senses[i] = sense;
+      if(devices[i].rssi < -100){
+        devices[i].is_empty = true;
+        senses[i].is_empty = true;
+
+        continue;
+      }
+      senses[i].strength = utils::rssi_to_strength(devices[i].rssi);
     }
   }
 }
