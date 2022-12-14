@@ -102,6 +102,7 @@ public:
     for (auto const &x : prevColorStrengths)
     {
       auto colorStrength = x.second;
+      colorStrength->strength = lerp(colorStrength->strength, 0, 0.1);
       colors.push_back(colorStrength);
     }
     return &colors;
