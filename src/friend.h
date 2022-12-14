@@ -59,16 +59,20 @@ struct ColorStrength
   Color color;
   uint8_t strength;
 };
-
+struct FriendLastSeen
+{
+  Friend theFriend;
+  uint32_t lastSeen;
+};
 typedef void onFriendFound(Friend f);
 typedef void FriendResultFn(onFriendFound callback);
 class FriendFinder {
   private:
-    std::map<std::string, Friend> friends;
+    std::map<std::string, FriendLastSeen> friends;
   public:
     FriendFinder() {
     }
-    std::vector<ColorStrength>* getColors(int delta=0) {
+    std::vector<ColorStrength>* getColors() {
       auto colorStrengthList = new std::vector<ColorStrength>();
       for (auto const& x : friends)
       {
@@ -76,8 +80,11 @@ class FriendFinder {
       }
       return colorStrengthList;
     }
-    void foundFriend(Friend f) {
-      friends[f.name] = f;
+    void foundFriend(Friend f, uint32_t now) {
+      friends[f.name] = FriendLastSeen {
+        .theFriend = f,
+        .lastSeen = now
+      };
     }
 };
 #endif // FRIEND_H

@@ -26,7 +26,7 @@ void test_on_friend_found_adds_colors(void) {
         .name = "Andrew",
         .distance = 1,
     };
-    manager->foundFriend(andrew);
+    manager->foundFriend(andrew, 0);
     colors = manager->getColors();
     TEST_ASSERT_EQUAL(1, colors->size());
 }
