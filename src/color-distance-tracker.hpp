@@ -57,13 +57,9 @@ namespace colortracker
     }
   }
   void detect(Device device){
-    if (device.is_empty)
-    {
-      return;
-    }
     if (devices[device.id].is_empty)
     {
-      devices[device.id].rssi = 0;
+      devices[device.id].rssi = -100;
       devices[device.id].is_empty = false;
     }
     newDevices[device.id].rssi = device.rssi;
@@ -76,12 +72,13 @@ namespace colortracker
       auto device = devices[i];
       auto sense = senses[i];
 
-      if(device.is_empty){
-        sense.is_empty = true;
-        continue;
-      }
+      // if(device.is_empty){
+      //   sense.is_empty = true;
+      //   continue;
+      // }
       sense.is_empty = false;
       sense.strength = 100;
+      senses[i] = sense;
     }
   }
 }
