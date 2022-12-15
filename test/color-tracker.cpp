@@ -44,7 +44,7 @@ void test_detect_rssi_to_strength(void)
     colortracker::detect({.id = 2,
                           .rssi = -80,
                           .is_empty = false});
-    for(int i = 0; i < 10; i++) {
+    for(int i = 0; i < 5; i++) {
         colortracker::update();
     }
     TEST_ASSERT_GREATER_THAN(colortracker::senses[2].strength, colortracker::senses[1].strength);
@@ -90,7 +90,7 @@ void test_sense_close_eventually_reaches_close_to_255(void)
     for (int i = 0; i < 100; i++)
     {
         colortracker::detect({.id = 1,
-                              .rssi = -45,
+                              .rssi = -70,
                               .is_empty = false});
 
         colortracker::update();
@@ -104,7 +104,7 @@ void test_middle_sense_eventually_reaches_close_to_128(void)
     for (int i = 0; i < 100; i++)
     {
         colortracker::detect({.id = 1,
-                              .rssi = -70,
+                              .rssi = -85,
                               .is_empty = false});
 
         colortracker::update();
@@ -118,7 +118,7 @@ void test_low_sense_still_above_0(void)
     for (int i = 0; i < 100; i++)
     {
         colortracker::detect({.id = 1,
-                              .rssi = -85,
+                              .rssi = -95,
                               .is_empty = false});
 
         colortracker::update();

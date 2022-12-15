@@ -9,8 +9,13 @@
 
 using Device = colortracker::Device;
 typedef void onDeviceFound(Device);
+
 uint8_t nameToId(std::string name)
 {
+  if (name[1] == '0')
+  {
+    return 0;
+  }
   if (name[1] == '1')
   {
     return 1;
@@ -19,11 +24,15 @@ uint8_t nameToId(std::string name)
   {
     return 2;
   }
-  if (name[1] == '3')
-  {
-    return 3;
-  }
   return 255;
+}
+
+void advertiseColorService() {
+  BLEServer *pServer = BLEDevice::createServer();
+  BLEService *pService = pServer->createService(COLOR_SENSE_UUID);
+  pService->start();
+  BLEAdvertising *pAdvertising = pServer->getAdvertising();
+  pAdvertising->start();
 }
 class BLEColorScanner : public BLEAdvertisedDeviceCallbacks
 {
@@ -57,21 +66,18 @@ public:
     });
   }
 };
+
+
 void scanForBleDevices(onDeviceFound callback)
 {
   auto pBLEScan = BLEDevice::getScan();
   pBLEScan->setActiveScan(true);
   pBLEScan->setInterval(100);
-  pBLEScan->setWindow(99);
+  pBLEScan->setWindow(95);
   pBLEScan->setAdvertisedDeviceCallbacks(new BLEColorScanner(callback));
 
   pBLEScan->start(
       1, [](BLEScanResults results)
-      {
-        for(int i = 0; i < results.getCount(); i++)
-        {
-          auto result = results.getDevice(i);
-          // Serial.println(result.toString().c_str());
-        } },
+      {},
       false);
 }

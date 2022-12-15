@@ -1,7 +1,7 @@
 #ifndef COLOR_SENSE_UTILS_H
 #define COLOR_SENSE_UTILS_H
 #include <math.h>
-#define MAX_DISTANCE 60
+#define MAX_DISTANCE 150
 namespace utils
 {
   double smooth(double val, double prev_val, double smooth_factor)
