@@ -3,6 +3,12 @@
 #define NUM_COLOR_TRACKERS 3
 #endif
 #include "./utils.h"
+#include <memory>
+#include <vector>
+
+#define ptr std::shared_ptr
+#define vec std::vector
+#define string std::string
 // BLE Device Name Data Structure:
 // [1] - ID (0-255)
 // [2] - R (0-255)
@@ -10,99 +16,29 @@
 // [4] - B (0-255)
 namespace colortracker
 {
-  struct Sense
+  class Device
   {
-    uint8_t id;
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
-    uint8_t strength;
-    bool is_empty;
+    public:
+     const string id;
+     int32_t rssi;
+     Device(const string &id, int32_t rssi) : id(id), rssi(rssi) {}
   };
 
-  struct Device
+  class Sense
   {
-    uint8_t id;
-    int32_t rssi;
-    bool is_empty;
+    public:
+      uint8_t id;
+      uint8_t strength;
   };
 
-  Device devices[NUM_COLOR_TRACKERS];
-  Device new_devices[NUM_COLOR_TRACKERS];
-  Sense senses[NUM_COLOR_TRACKERS];
-  uint32_t num_color_trackers = NUM_COLOR_TRACKERS;
+  class ColorTracker
+  {
+    vec<ptr<Device>> devices;
+    vec<ptr<Device>> new_devices;
+    vec<ptr<Sense>> senses;
+    ColorTracker(const uint32_t num_color_trackers=3){
 
-  void clear(Device* d, int id)
-  {
-    d->id = id;
-    d->rssi = -999;
-    d->is_empty = true;
-  }
-  void clear(Sense* s, int id)
-  {
-    s->id = id;
-    s->strength = 0;
-    s->is_empty = true;
-  }
-  void init(Device *d)
-  {
-    for (int i = 0; i < NUM_COLOR_TRACKERS; i++)
-    {
-      clear(&d[i], i);
     }
-  }
-  void init(Sense *s)
-  {
-    for (int i = 0; i < NUM_COLOR_TRACKERS; i++)
-    {
-      clear(&s[i], i);
-    }
-  }
-
-  void init()
-  {
-      init(devices);
-      init(new_devices);
-      init(senses);
-  }
-  void detect(Device device)
-  {
-    if (devices[device.id].is_empty)
-    {
-      devices[device.id].rssi = -95;
-      devices[device.id].is_empty = false;
-    }
-    new_devices[device.id].rssi = device.rssi;
-    new_devices[device.id].is_empty = false;
   };
-
-  void update()
-  {
-    for (int i = 0; i < NUM_COLOR_TRACKERS; i++)
-    {
-      if (devices[i].is_empty)
-      {
-        clear(&senses[i], i);
-        continue;
-      }
-      senses[i].is_empty = false;
-      if (new_devices[i].is_empty)
-      {
-        devices[i].rssi = utils::smooth(devices[i].rssi, -110, 1);
-      }
-      else
-      {
-        devices[i].rssi = utils::smooth(devices[i].rssi, new_devices[i].rssi, 1);
-        clear(&new_devices[i], i);
-      }
-      if (devices[i].rssi < -100)
-      {
-        clear(&devices[i], i);
-        clear(&senses[i], i);
-        continue;
-      }
-      senses[i].strength = utils::rssi_to_strength(devices[i].rssi);
-    }
-  }
 }
 #endif
