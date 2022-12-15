@@ -4,6 +4,7 @@
 #include "./color-distance-tracker.hpp"
 
 unsigned long lastScanTime = 0;
+#define DEVICE_NAME "C0"
 void setup()
 {
   delay(2000);
@@ -11,7 +12,8 @@ void setup()
   // put your setup code here, to run once:
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(115200);
-  BLEDevice::init("C0");
+  BLEDevice::init(DEVICE_NAME);
+  Serial.printf("%s reporting for duty. \n", DEVICE_NAME);
   advertiseColorService();
 }
 

@@ -32,6 +32,7 @@ void advertiseColorService() {
   BLEService *pService = pServer->createService(COLOR_SENSE_UUID);
   pService->start();
   BLEAdvertising *pAdvertising = pServer->getAdvertising();
+  pAdvertising->addServiceUUID(COLOR_SENSE_UUID);
   pAdvertising->start();
 }
 class BLEColorScanner : public BLEAdvertisedDeviceCallbacks
@@ -78,6 +79,10 @@ void scanForBleDevices(onDeviceFound callback)
 
   pBLEScan->start(
       1, [](BLEScanResults results)
-      {},
+      {
+        for(int i = 0; i < results.getCount();i++){
+          Serial.printf("found device: %s %d \n", results.getDevice(i).getName().c_str(), results.getDevice(i).getRSSI());
+        }
+      },
       false);
 }
