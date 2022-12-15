@@ -3,6 +3,8 @@
 #ifndef NUM_COLOR_TRACKERS
 #define NUM_COLOR_TRACKERS 5
 #endif
+
+#define byte uint8_t
 #include "./utils.h"
 // BLE Device Name Data Structure:
 // [0] - Intentionally blank
