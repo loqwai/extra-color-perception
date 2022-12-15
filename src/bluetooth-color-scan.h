@@ -42,7 +42,7 @@ public:
     {
       return;
     }
-    Serial.println("Found extra color service");
+    // Serial.println("Found extra color service");
     auto name = advertisedDevice.getName();
     auto rssi = advertisedDevice.getRSSI();
     auto id = nameToId(name);
@@ -71,7 +71,7 @@ void scanForBleDevices(onDeviceFound callback)
         for(int i = 0; i < results.getCount(); i++)
         {
           auto result = results.getDevice(i);
-          Serial.println(result.toString().c_str());
+          // Serial.println(result.toString().c_str());
         } },
       false);
 }

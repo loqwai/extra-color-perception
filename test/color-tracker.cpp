@@ -44,7 +44,9 @@ void test_detect_rssi_to_strength(void)
     colortracker::detect({.id = 2,
                           .rssi = -80,
                           .is_empty = false});
-    colortracker::update();
+    for(int i = 0; i < 10; i++) {
+        colortracker::update();
+    }
     TEST_ASSERT_GREATER_THAN(colortracker::senses[2].strength, colortracker::senses[1].strength);
 }
 
@@ -61,7 +63,7 @@ void test_sense_fades_over_time(void)
                           .is_empty = false});
     colortracker::update();
     auto before_strength = colortracker::senses[1].strength;
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 10; i++)
     {
         colortracker::update();
     }
