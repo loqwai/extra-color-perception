@@ -12,7 +12,9 @@ typedef void onDeviceFound(Device);
 
 uint8_t nameToId(std::string name)
 {
-  return atoi(name.substr(1,1).c_str());
+  auto name_id=name.substr(1,1).c_str();
+  auto id = atoi(name_id);
+  return id;
 }
 
 void advertiseColorService() {
