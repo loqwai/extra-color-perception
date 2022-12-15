@@ -1,6 +1,7 @@
+#ifndef COLOR_DISTANCE_TRACKER_H
+#define COLOR_DISTANCE_TRACKER_H
 #ifndef NUM_COLOR_TRACKERS
-#ifndef NUM_COLOR_TRACKERS
-#define NUM_COLOR_TRACKERS 3
+#define NUM_COLOR_TRACKERS 5
 #endif
 #include "./utils.h"
 // BLE Device Name Data Structure:

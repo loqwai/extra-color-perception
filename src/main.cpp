@@ -19,7 +19,7 @@ void setup()
   BLEDevice::init(DEVICE_NAME);
   advertiseColorService();
   setupOLED();
-  Serial.printf("%s reporting for duty. \n", DEVICE_NAME);
+  Serial.printf("%s reporting for duty. %d trackers available \n", DEVICE_NAME, NUM_COLOR_TRACKERS);
   Heltec.display->clear();
 }
 
