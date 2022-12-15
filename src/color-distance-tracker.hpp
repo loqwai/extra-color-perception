@@ -4,6 +4,7 @@
 #endif
 #include "./utils.h"
 // BLE Device Name Data Structure:
+// [0] - Intentionally blank
 // [1] - ID (0-255)
 // [2] - R (0-255)
 // [3] - G (0-255)
