@@ -147,3 +147,4 @@ yarn-error.log*
 .pio/build
 .vscode/launch.json
 ./.vscode/c_cpp_properties.json
+.vscode/c_cpp_properties.json
