@@ -14,17 +14,17 @@ namespace colortracker
 {
   struct Sense
   {
-    uint8_t id;
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
-    uint8_t strength;
+    byte id;
+    byte r;
+    byte g;
+    byte b;
+    byte strength;
     bool is_empty;
   };
 
   struct Device
   {
-    uint8_t id;
+    byte id;
     int32_t rssi;
     bool is_empty;
   };

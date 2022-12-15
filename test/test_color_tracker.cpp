@@ -1,5 +1,5 @@
 #include <unity.h>
-#include "color-distance-tracker.hpp"
+#include "color-tracker.hpp"
 #include "utils.h"
 void setUp(void)
 {

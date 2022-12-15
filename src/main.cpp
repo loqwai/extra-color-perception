@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <BLEDevice.h>
 #include "heltec.h"
-#include "./bluetooth-color-scan.h"
-#include "./color-distance-tracker.hpp"
+#include "./bluetooth_color_scan.h"
+#include "./color_tracker.hpp"
 
 unsigned long lastScanTime = 0;
 #define DEVICE_NAME "C0"
@@ -48,9 +48,9 @@ void loop()
     Serial.printf("sense: %d %d \n", sense.id, sense.strength);
     Heltec.display->drawString(0,10*i+10, String(sense.id));
 
-    uint8_t displayWidth = 75;
+    byte displayWidth = 75;
     double strengthPercent = (double)sense.strength / 255.0;
-    uint8_t displayStrength = (uint8_t)(strengthPercent * displayWidth);
+    byte displayStrength = (byte)(strengthPercent * displayWidth);
     Heltec.display->drawProgressBar(20, 10 * i+10, displayWidth,8, displayStrength);
   }
 }

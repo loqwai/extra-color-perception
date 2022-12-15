@@ -34,7 +34,7 @@ namespace utils
   {
     return fmax(min, fmin(max, val));
   }
-  uint8_t distance_to_strength(double distance)
+  byte distance_to_strength(double distance)
   {
     if(distance >= MAX_DISTANCE) {
       return 0;
@@ -44,7 +44,7 @@ namespace utils
     return clamp(strength, 5, 255);
   }
 
-  uint8_t rssi_to_strength(int rssi)
+  byte rssi_to_strength(int rssi)
   {
     return distance_to_strength(rssi_to_distance(rssi));
   }
