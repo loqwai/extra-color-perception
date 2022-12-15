@@ -69,6 +69,9 @@ namespace colortracker
   }
   void detect(Device device)
   {
+    if(device.id >= NUM_COLOR_TRACKERS) {
+        return;
+    }
     if (devices[device.id].is_empty)
     {
       devices[device.id].rssi = -95;
