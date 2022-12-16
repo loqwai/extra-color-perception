@@ -28,11 +28,6 @@ void loop()
 {
   Heltec.display->drawStringMaxWidth(0, 0, 128, DEVICE_NAME);
   Heltec.display->display();
-  // put your main code here, to run repeatedly:
-  digitalWrite(LED_BUILTIN, HIGH);
-  // delay(100);
-  digitalWrite(LED_BUILTIN, LOW);
-  // delay(100);
   if (millis() - lastScanTime < 2000) return;
     Heltec.display->clear();
     lastScanTime = millis();
