@@ -33,8 +33,8 @@ void setup()
 int count = 0;
 void loop()
 {
-    delay(1000);
-    if (millis() - lastScanTime > 2000) {
+    delay(300);
+    if (millis() - lastScanTime > 1100) {
         lastScanTime = millis();
         scanForBleDevices([](Device d)
                         {
@@ -42,10 +42,10 @@ void loop()
         colortracker::detect(d); });
     }
     colortracker::update();
-    CRGB colors[] = {CRGB::Red, CRGB::Green, CRGB::Purple, CRGB::Blue, CRGB::Orange, CRGB::Yellow};
+    const CRGB colors[] = {CRGB::Red, CRGB::Green, CRGB::Purple, CRGB::Blue, CRGB::Orange, CRGB::Yellow};
     int totalStrength = 0;
-    // colortracker::senses[my_id].strength = 20;
-    // colortracker::senses[my_id].is_empty = false;
+    colortracker::senses[my_id].strength = 10;
+    colortracker::senses[my_id].is_empty = false;
     for (int i = 0; i < NUM_COLOR_TRACKERS; i++)
     {
         auto sense = colortracker::senses[i];
