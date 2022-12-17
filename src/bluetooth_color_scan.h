@@ -70,9 +70,9 @@ void scanForBleDevices(onDeviceFound callback)
   pBLEScan->start(
       1, [](BLEScanResults results)
       {
-        for(int i = 0; i < results.getCount();i++){
-          Serial.printf("found device: %s %d \n", results.getDevice(i).getName().c_str(), results.getDevice(i).getRSSI());
-        }
+        // for(int i = 0; i < results.getCount();i++){
+        //   Serial.printf("found device: %s %d \n", results.getDevice(i).getName().c_str(), results.getDevice(i).getRSSI());
+        // }
       },
       false);
 }

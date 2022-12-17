@@ -14,6 +14,7 @@ void setupOLED()
     Heltec.begin(true /*DisplayEnable Enable*/, false /*LoRa Disable*/, true /*Serial Enable*/);
 }
 CRGBArray<NUM_LEDS> leds;
+auto my_id = nameToId(DEVICE_NAME);
 void setup()
 {
     delay(2000);
@@ -32,19 +33,19 @@ void setup()
 int count = 0;
 void loop()
 {
-    Heltec.display->drawStringMaxWidth(0, 0, 128, DEVICE_NAME);
-    Heltec.display->display();
-    if (millis() - lastScanTime < 2000)
-        return;
-    Heltec.display->clear();
-    lastScanTime = millis();
-    scanForBleDevices([](Device d)
-                      {
-      Serial.printf("found device: %d %d \n", d.id, d.rssi);
-    colortracker::detect(d); });
+    delay(1000);
+    if (millis() - lastScanTime > 2000) {
+        lastScanTime = millis();
+        scanForBleDevices([](Device d)
+                        {
+        Serial.printf("found device: %d %d \n", d.id, d.rssi);
+        colortracker::detect(d); });
+    }
     colortracker::update();
     CRGB colors[] = {CRGB::Red, CRGB::Green, CRGB::Purple, CRGB::Blue, CRGB::Orange, CRGB::Yellow};
     int totalStrength = 0;
+    // colortracker::senses[my_id].strength = 20;
+    // colortracker::senses[my_id].is_empty = false;
     for (int i = 0; i < NUM_COLOR_TRACKERS; i++)
     {
         auto sense = colortracker::senses[i];
@@ -68,5 +69,6 @@ void loop()
         Serial.printf("color: %d %d %d \n", color.red, color.green, color.blue);
     }
     Serial.printf("ledColor: %d %d %d \n", ledColor.red, ledColor.green, ledColor.blue);
+    FastLED.clear();
     FastLED.showColor(ledColor);
 }

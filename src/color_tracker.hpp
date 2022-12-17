@@ -99,7 +99,7 @@ namespace colortracker
       }
       else
       {
-        devices[i].rssi = utils::smooth(devices[i].rssi, new_devices[i].rssi, 0.3);
+        devices[i].rssi = utils::smooth(devices[i].rssi, new_devices[i].rssi, 0.2);
         clear(&new_devices[i], i);
       }
       if (devices[i].rssi < -100)
