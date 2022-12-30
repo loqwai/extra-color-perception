@@ -1,18 +1,15 @@
+#define D5 5
+#define D7 7
 #include <Arduino.h>
 #include <BLEDevice.h>
 #include <FastLED.h>
-#include "heltec.h"
 #include "./bluetooth_color_scan.h"
 #include "./color_tracker.hpp"
 
 unsigned long lastScanTime = 0;
-#define DEVICE_NAME "C2"
-#define DATA_PIN 22
+#define DEVICE_NAME "C1"
+#define DATA_PIN 6
 #define NUM_LEDS 16
-void setupOLED()
-{
-    Heltec.begin(true /*DisplayEnable Enable*/, false /*LoRa Disable*/, true /*Serial Enable*/);
-}
 CRGBArray<NUM_LEDS> leds;
 auto my_id = nameToId(DEVICE_NAME);
 void setup()
@@ -21,13 +18,10 @@ void setup()
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS); // GRB ordering is assumed
 
     colortracker::init();
-    pinMode(LED_BUILTIN, OUTPUT);
     Serial.begin(115200);
     BLEDevice::init(DEVICE_NAME);
     advertiseColorService();
-    setupOLED();
     Serial.printf("%s reporting for duty. %d trackers available \n", DEVICE_NAME, NUM_COLOR_TRACKERS);
-    Heltec.display->clear();
 }
 
 int count = 0;
