@@ -8,7 +8,7 @@
 
 unsigned long lastScanTime = 0;
 #define DEVICE_NAME "C1"
-#define DATA_PIN 6
+#define DATA_PIN 22
 #define NUM_LEDS 16
 CRGBArray<NUM_LEDS> leds;
 auto my_id = nameToId(DEVICE_NAME);
